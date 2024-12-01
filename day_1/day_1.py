@@ -1,3 +1,4 @@
+from collections import defaultdict
 from typing import List, Tuple, TextIO
 
 class Day1:
@@ -14,6 +15,18 @@ class Day1:
         diff_score = sum([abs(line[0] - line[1]) for line in zip(left_list, right_list)])
         return diff_score
 
+    def task_2(input: TextIO) -> int:
+        left_list, right_list = Day1.parse_data(input)
+        right_map = defaultdict(lambda: 0)
+        for value in right_list:
+            right_map[value] += 1
+        
+        similarity_score = sum(l_val * right_map[l_val] for l_val in left_list)
+        return similarity_score
+    
 if __name__ == '__main__':
     with open('input_1.txt', 'r') as f:
         print(f"differense score: {Day1.task_1(f)}")
+
+    with open('input_1.txt', 'r') as f:
+        print(f"similarity score: {Day1.task_2(f)}")
